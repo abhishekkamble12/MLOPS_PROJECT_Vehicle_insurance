@@ -1,0 +1,55 @@
+﻿.venv\Scripts\python.exe 
+: Traceback (most recent 
+call last):
+At line:1 char:1
++ 
+.venv\Scripts\python.exe 
+app.py 2> stderr.txt ; 
+get-content stderr.tx ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo        
+      : NotSpecified: (T  
+  raceback (most recent   
+  call last)::String)     
+[], RemoteException
+    + FullyQualifiedError 
+   Id : NativeCommandErr  
+  or
+ 
+  File "D:\ORION_PAX\MLOPS
+_PROJECT_Vehicle_insurance
+\app.py", line 13, in 
+<module>
+    from src.pipline.predi
+ction_pipeline import 
+VehicleData, 
+VehicleDataClassifier
+  File "D:\ORION_PAX\MLOPS
+_PROJECT_Vehicle_insurance
+\src\pipline\prediction_pi
+peline.py", line 3, in 
+<module>
+    from 
+src.entity.s3_estimator 
+import Proj1Estimator
+  File "D:\ORION_PAX\MLOPS
+_PROJECT_Vehicle_insurance
+\src\entity\s3_estimator.p
+y", line 1, in <module>
+    from src.cloud_storage
+.aws_storage import 
+SimpleStorageService
+  File "D:\ORION_PAX\MLOPS
+_PROJECT_Vehicle_insurance
+\src\cloud_storage\aws_sto
+rage.py", line 8, in 
+<module>
+    from src.exception 
+import MyException
+ImportError: cannot 
+import name 'MyException' 
+from 'src.exception' (D:\O
+RION_PAX\MLOPS_PROJECT_Veh
+icle_insurance\src\excepti
+on\__init__.py)

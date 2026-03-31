@@ -5,9 +5,9 @@ load_dotenv()
 # For MongoDB connection
 monogo_username ="kambleabhishek7744_db_user"
 mongo_password="dYO1RoxwpdZF6RCa"
-DB_NAME = "Cluster0"
+DATABASE_NAME = "Cluster0"
 COLLECTION_NAME = "insurance"
-CONNECTION_URL ="mongodb+srv://kambleabhishek7744_db_user:dYO1RoxwpdZF6RCa@cluster0.p8a5tuv.mongodb.net/?appName=Cluster0"
+MONGODB_URL_KEY = "MONGODB_URL"
 
 PIPELINE_NAME: str = ""
 ARTIFACT_DIR: str = "artifact"
@@ -24,8 +24,8 @@ TEST_FILE_NAME: str = "test.csv"
 SCHEMA_FILE_PATH = os.path.join("config", "schema.yaml")
 
 
-AWS_ACCESS_KEY_ID_ENV_KEY = os.getenv("AWS_ACCESS_KEY_ID")
-AWS_SECRET_ACCESS_KEY_ENV_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
+AWS_ACCESS_KEY_ID_ENV_KEY = "AWS_ACCESS_KEY_ID"
+AWS_SECRET_ACCESS_KEY_ENV_KEY = "AWS_SECRET_ACCESS_KEY"
 REGION_NAME = "us-east-1"
 
 

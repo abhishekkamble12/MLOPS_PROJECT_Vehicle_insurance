@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "<string>", line 2, in <module>
+  File "D:\ORION_PAX\MLOPS_PROJECT_Vehicle_insurance\app.py", line 14, in <module>
+    from src.pipline.training_pipeline import TrainPipeline
+  File "D:\ORION_PAX\MLOPS_PROJECT_Vehicle_insurance\src\pipline\training_pipeline.py", line 5, in <module>
+    from src.components.data_ingestion import DataIngestion
+  File "D:\ORION_PAX\MLOPS_PROJECT_Vehicle_insurance\src\components\data_ingestion.py", line 11, in <module>
+    from src.data_access.proj1_data import Proj1Data
+  File "D:\ORION_PAX\MLOPS_PROJECT_Vehicle_insurance\src\data_access\proj1_data.py", line 6, in <module>
+    from src.configuration.mongo_db_connection import MongoDBClient
+  File "D:\ORION_PAX\MLOPS_PROJECT_Vehicle_insurance\src\configuration\mongo_db_connection.py", line 8, in <module>
+    from src.constants import DATABASE_NAME, MONGODB_URL_KEY
+ImportError: cannot import name 'DATABASE_NAME' from 'src.constants' (D:\ORION_PAX\MLOPS_PROJECT_Vehicle_insurance\src\constants\__init__.py)
