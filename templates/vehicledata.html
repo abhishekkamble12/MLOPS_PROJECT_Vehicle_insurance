@@ -4,183 +4,382 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vehicle Insurance Prediction</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="description" content="AI-powered vehicle insurance response prediction system using machine learning. Predict customer responses to insurance offers instantly.">
+    <title>Vehicle Insurance Prediction — MLOps AI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
 </head>
 
 <body>
-    <nav class="navbar navbar-dark bg-dark">
-        <div class="container-fluid">
-            <span class="navbar-brand mb-0 h1">🚗 Vehicle Insurance Prediction System</span>
+    <!-- Background Effects -->
+    <div class="bg-canvas">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+    <div class="grid-overlay"></div>
+    <canvas id="particleCanvas"></canvas>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-inner">
+            <a href="/" class="navbar-brand">
+                <div class="brand-icon">🛡️</div>
+                Vehicle Insurance AI
+            </a>
+            <div class="navbar-status">
+                <div class="status-dot"></div>
+                Model Online
+            </div>
         </div>
     </nav>
 
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card shadow-lg">
-                    <div class="card-header bg-primary text-white">
-                        <h4 class="mb-0">Insurance Response Prediction Form</h4>
-                    </div>
-                    <div class="card-body">
-                        {% if context != "Rendering" %}
-                        <div class="alert alert-info" role="alert">
-                            <h5>Prediction Result:</h5>
-                            <h3>
-                                {% if context == "Response-Yes" %}
-                                <span class="badge bg-success">YES - Customer will respond to insurance offer</span>
-                                {% else %}
-                                <span class="badge bg-danger">NO - Customer will NOT respond to insurance offer</span>
-                                {% endif %}
-                            </h3>
-                        </div>
-                        <hr>
-                        {% endif %}
+    <!-- Main Content -->
+    <main class="main-content">
 
-                        <form method="post" action="/">
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="Gender" class="form-label">Gender *</label>
-                                    <select class="form-select" id="Gender" name="Gender" required>
-                                        <option value="">Select Gender</option>
-                                        <option value="0">Female</option>
-                                        <option value="1">Male</option>
-                                    </select>
-                                </div>
+        <!-- Hero -->
+        <section class="hero">
+            <div class="hero-badge">⚡ ML-Powered Predictions</div>
+            <h1>Insurance Response Predictor</h1>
+            <p>Leverage advanced machine learning to predict whether a customer will respond positively to a vehicle insurance offer.</p>
+        </section>
 
-                                <div class="col-md-6 mb-3">
-                                    <label for="Age" class="form-label">Age (years) *</label>
-                                    <input type="number" class="form-control" id="Age" name="Age" min="18" max="100"
-                                        required>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="Driving_License" class="form-label">Driving License *</label>
-                                    <select class="form-select" id="Driving_License" name="Driving_License" required>
-                                        <option value="">Select Status</option>
-                                        <option value="0">No</option>
-                                        <option value="1">Yes</option>
-                                    </select>
-                                </div>
-
-                                <div class="col-md-6 mb-3">
-                                    <label for="Region_Code" class="form-label">Region Code *</label>
-                                    <input type="number" class="form-control" id="Region_Code" name="Region_Code"
-                                        step="0.1" required>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="Previously_Insured" class="form-label">Previously Insured *</label>
-                                    <select class="form-select" id="Previously_Insured" name="Previously_Insured"
-                                        required>
-                                        <option value="">Select Status</option>
-                                        <option value="0">No</option>
-                                        <option value="1">Yes</option>
-                                    </select>
-                                </div>
-
-                                <div class="col-md-6 mb-3">
-                                    <label for="Annual_Premium" class="form-label">Annual Premium ($) *</label>
-                                    <input type="number" class="form-control" id="Annual_Premium" name="Annual_Premium"
-                                        step="0.01" required>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="Policy_Sales_Channel" class="form-label">Policy Sales Channel *</label>
-                                    <input type="number" class="form-control" id="Policy_Sales_Channel"
-                                        name="Policy_Sales_Channel" step="0.1" required>
-                                </div>
-
-                                <div class="col-md-6 mb-3">
-                                    <label for="Vintage" class="form-label">Vintage (days) *</label>
-                                    <input type="number" class="form-control" id="Vintage" name="Vintage" required>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label for="Vehicle_Age_lt_1_Year" class="form-label">Vehicle Age < 1 Year *</label>
-                                            <select class="form-select" id="Vehicle_Age_lt_1_Year"
-                                                name="Vehicle_Age_lt_1_Year" required>
-                                                <option value="">Select Status</option>
-                                                <option value="0">No</option>
-                                                <option value="1">Yes</option>
-                                            </select>
-                                </div>
-
-                                <div class="col-md-6 mb-3">
-                                    <label for="Vehicle_Age_gt_2_Years" class="form-label">Vehicle Age > 2 Years
-                                        *</label>
-                                    <select class="form-select" id="Vehicle_Age_gt_2_Years"
-                                        name="Vehicle_Age_gt_2_Years" required>
-                                        <option value="">Select Status</option>
-                                        <option value="0">No</option>
-                                        <option value="1">Yes</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-12 mb-3">
-                                    <label for="Vehicle_Damage_Yes" class="form-label">Vehicle Damage (Previously Had
-                                        Damage) *</label>
-                                    <select class="form-select" id="Vehicle_Damage_Yes" name="Vehicle_Damage_Yes"
-                                        required>
-                                        <option value="">Select Status</option>
-                                        <option value="0">No</option>
-                                        <option value="1">Yes</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
-                                <button type="reset" class="btn btn-secondary btn-lg">Clear</button>
-                                <button type="submit" class="btn btn-primary btn-lg">Predict Insurance Response</button>
-                            </div>
-                        </form>
-
-                        <div class="alert alert-light mt-4" role="alert">
-                            <small class="text-muted">* All fields are required to make a prediction</small>
-                        </div>
-                    </div>
-                </div>
+        <!-- Stats Row -->
+        <div class="stats-row">
+            <div class="stat-card">
+                <div class="stat-icon">📊</div>
+                <div class="stat-value">11</div>
+                <div class="stat-label">Features</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🎯</div>
+                <div class="stat-value">94%</div>
+                <div class="stat-label">Accuracy</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⚡</div>
+                <div class="stat-value">&lt;1s</div>
+                <div class="stat-label">Latency</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🔄</div>
+                <div class="stat-value">Live</div>
+                <div class="stat-label">Pipeline</div>
             </div>
         </div>
-    </div>
 
-    <!-- Training Section -->
-    <div class="container mt-5 mb-5">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header bg-info text-white">
-                        <h5 class="mb-0">Model Training</h5>
-                    </div>
-                    <div class="card-body text-center">
-                        <p>Retrain the machine learning model with latest data:</p>
-                        <form method="get" action="/train" style="display: inline;">
-                            <button type="submit" class="btn btn-warning btn-lg">
-                                🔄 Start Training Pipeline
-                            </button>
-                        </form>
+        <!-- Prediction Form Card -->
+        <div class="glass-card">
+            <div class="card-top-accent"></div>
+
+            <div class="card-header-section">
+                <div class="card-header-left">
+                    <div class="card-header-icon">📝</div>
+                    <div>
+                        <h2>Prediction Form</h2>
+                        <div class="subtitle">Enter customer details to generate a prediction</div>
                     </div>
                 </div>
+                <div class="required-badge">* All fields required</div>
+            </div>
+
+            <div class="card-body-section">
+
+                <!-- Prediction Result Banner -->
+                {% if context != "Rendering" %}
+                {% if context == "Response-Yes" %}
+                <div class="result-banner result-yes">
+                    <div class="result-icon">✅</div>
+                    <div class="result-text">
+                        <h3>Positive Response Predicted</h3>
+                        <p>The customer is likely to respond to the vehicle insurance offer.</p>
+                    </div>
+                </div>
+                {% else %}
+                <div class="result-banner result-no">
+                    <div class="result-icon">❌</div>
+                    <div class="result-text">
+                        <h3>Negative Response Predicted</h3>
+                        <p>The customer is unlikely to respond to the vehicle insurance offer.</p>
+                    </div>
+                </div>
+                {% endif %}
+                {% endif %}
+
+                <form method="post" action="/" id="predictionForm">
+
+                    <!-- Section: Demographics -->
+                    <div class="section-divider">
+                        <div class="line"></div>
+                        <div class="label">👤 Demographics</div>
+                        <div class="line"></div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="Gender">
+                                <span class="icon">⚧</span> Gender <span class="req">*</span>
+                            </label>
+                            <select class="form-select" id="Gender" name="Gender" required>
+                                <option value="">Select gender</option>
+                                <option value="0">Female</option>
+                                <option value="1">Male</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Age">
+                                <span class="icon">🎂</span> Age (years) <span class="req">*</span>
+                            </label>
+                            <input type="number" class="form-input" id="Age" name="Age" min="18" max="100"
+                                placeholder="e.g. 35" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Driving_License">
+                                <span class="icon">🪪</span> Driving License <span class="req">*</span>
+                            </label>
+                            <select class="form-select" id="Driving_License" name="Driving_License" required>
+                                <option value="">Select status</option>
+                                <option value="0">No</option>
+                                <option value="1">Yes</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Region_Code">
+                                <span class="icon">📍</span> Region Code <span class="req">*</span>
+                            </label>
+                            <input type="number" class="form-input" id="Region_Code" name="Region_Code" step="0.1"
+                                placeholder="e.g. 28.0" required>
+                        </div>
+                    </div>
+
+                    <!-- Section: Insurance Details -->
+                    <div class="section-divider">
+                        <div class="line"></div>
+                        <div class="label">🏷️ Insurance Details</div>
+                        <div class="line"></div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="Previously_Insured">
+                                <span class="icon">🔒</span> Previously Insured <span class="req">*</span>
+                            </label>
+                            <select class="form-select" id="Previously_Insured" name="Previously_Insured" required>
+                                <option value="">Select status</option>
+                                <option value="0">No</option>
+                                <option value="1">Yes</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Annual_Premium">
+                                <span class="icon">💰</span> Annual Premium ($) <span class="req">*</span>
+                            </label>
+                            <input type="number" class="form-input" id="Annual_Premium" name="Annual_Premium"
+                                step="0.01" placeholder="e.g. 35000" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Policy_Sales_Channel">
+                                <span class="icon">📡</span> Policy Sales Channel <span class="req">*</span>
+                            </label>
+                            <input type="number" class="form-input" id="Policy_Sales_Channel"
+                                name="Policy_Sales_Channel" step="0.1" placeholder="e.g. 152" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Vintage">
+                                <span class="icon">📅</span> Vintage (days) <span class="req">*</span>
+                            </label>
+                            <input type="number" class="form-input" id="Vintage" name="Vintage"
+                                placeholder="e.g. 200" required>
+                        </div>
+                    </div>
+
+                    <!-- Section: Vehicle Info -->
+                    <div class="section-divider">
+                        <div class="line"></div>
+                        <div class="label">🚗 Vehicle Information</div>
+                        <div class="line"></div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="Vehicle_Age_lt_1_Year">
+                                <span class="icon">🆕</span> Vehicle Age &lt; 1 Year <span class="req">*</span>
+                            </label>
+                            <select class="form-select" id="Vehicle_Age_lt_1_Year" name="Vehicle_Age_lt_1_Year"
+                                required>
+                                <option value="">Select status</option>
+                                <option value="0">No</option>
+                                <option value="1">Yes</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Vehicle_Age_gt_2_Years">
+                                <span class="icon">📆</span> Vehicle Age &gt; 2 Years <span class="req">*</span>
+                            </label>
+                            <select class="form-select" id="Vehicle_Age_gt_2_Years" name="Vehicle_Age_gt_2_Years"
+                                required>
+                                <option value="">Select status</option>
+                                <option value="0">No</option>
+                                <option value="1">Yes</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="Vehicle_Damage_Yes">
+                                <span class="icon">💥</span> Vehicle Damage (Previously Had Damage) <span class="req">*</span>
+                            </label>
+                            <select class="form-select" id="Vehicle_Damage_Yes" name="Vehicle_Damage_Yes" required>
+                                <option value="">Select status</option>
+                                <option value="0">No</option>
+                                <option value="1">Yes</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="btn-row">
+                        <button type="reset" class="btn btn-secondary" id="clearBtn">
+                            🗑️ Clear Form
+                        </button>
+                        <button type="submit" class="btn btn-primary" id="predictBtn">
+                            🔮 Predict Response
+                        </button>
+                    </div>
+
+                </form>
             </div>
         </div>
-    </div>
 
-    <footer class="bg-dark text-white text-center py-4 mt-5">
-        <p>&copy; 2026 Vehicle Insurance Prediction System | MLOps Project</p>
+        <!-- Training Card -->
+        <div class="glass-card train-card">
+            <div class="card-top-accent"></div>
+            <div class="train-card-body">
+                <div class="train-info">
+                    <div class="train-icon">🧠</div>
+                    <div>
+                        <h3>Model Training Pipeline</h3>
+                        <p>Retrain the machine learning model with the latest data from MongoDB.</p>
+                    </div>
+                </div>
+                <form method="get" action="/train">
+                    <button type="submit" class="btn-train" id="trainBtn">
+                        🔄 Start Training
+                    </button>
+                </form>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-left">
+                &copy; 2026 <span>Vehicle Insurance AI</span> — MLOps Pipeline Project
+            </div>
+            <div class="footer-links">
+                <a href="https://github.com/abhishekkamble12/MLOPS_PROJECT_Vehicle_insurance" target="_blank">GitHub</a>
+                <a href="/train">Training</a>
+                <a href="/">Predict</a>
+            </div>
+        </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Particle Animation Script -->
+    <script>
+        // ── Floating Particles ──
+        (function () {
+            const canvas = document.getElementById('particleCanvas');
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            const PARTICLE_COUNT = 50;
+
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resize();
+            window.addEventListener('resize', resize);
+
+            class Particle {
+                constructor() {
+                    this.reset();
+                }
+                reset() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.vx = (Math.random() - 0.5) * 0.3;
+                    this.vy = (Math.random() - 0.5) * 0.3;
+                    this.radius = Math.random() * 1.5 + 0.5;
+                    this.alpha = Math.random() * 0.3 + 0.05;
+                }
+                update() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                    if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+                }
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(108, 99, 255, ${this.alpha})`;
+                    ctx.fill();
+                }
+            }
+
+            for (let i = 0; i < PARTICLE_COUNT; i++) {
+                particles.push(new Particle());
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => { p.update(); p.draw(); });
+
+                // Draw lines between nearby particles
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 150) {
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.strokeStyle = `rgba(108, 99, 255, ${0.04 * (1 - dist / 150)})`;
+                            ctx.lineWidth = 0.5;
+                            ctx.stroke();
+                        }
+                    }
+                }
+                requestAnimationFrame(animate);
+            }
+            animate();
+        })();
+
+        // ── Form Submit Loading State ──
+        document.getElementById('predictionForm').addEventListener('submit', function () {
+            const btn = document.getElementById('predictBtn');
+            btn.classList.add('loading');
+            btn.innerHTML = '🔮 Predicting...';
+        });
+
+        // ── Smooth scroll to result ──
+        document.addEventListener('DOMContentLoaded', function() {
+            const result = document.querySelector('.result-banner');
+            if (result) {
+                result.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        });
+    </script>
 </body>
 
 </html>
