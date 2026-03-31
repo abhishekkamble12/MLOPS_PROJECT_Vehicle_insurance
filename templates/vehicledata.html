@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Insurance Prediction</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
+</head>
+
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+            <span class="navbar-brand mb-0 h1">🚗 Vehicle Insurance Prediction System</span>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-lg">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0">Insurance Response Prediction Form</h4>
+                    </div>
+                    <div class="card-body">
+                        {% if context != "Rendering" %}
+                        <div class="alert alert-info" role="alert">
+                            <h5>Prediction Result:</h5>
+                            <h3>
+                                {% if context == "Response-Yes" %}
+                                <span class="badge bg-success">YES - Customer will respond to insurance offer</span>
+                                {% else %}
+                                <span class="badge bg-danger">NO - Customer will NOT respond to insurance offer</span>
+                                {% endif %}
+                            </h3>
+                        </div>
+                        <hr>
+                        {% endif %}
+
+                        <form method="post" action="/">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="Gender" class="form-label">Gender *</label>
+                                    <select class="form-select" id="Gender" name="Gender" required>
+                                        <option value="">Select Gender</option>
+                                        <option value="0">Female</option>
+                                        <option value="1">Male</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="Age" class="form-label">Age (years) *</label>
+                                    <input type="number" class="form-control" id="Age" name="Age" min="18" max="100"
+                                        required>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="Driving_License" class="form-label">Driving License *</label>
+                                    <select class="form-select" id="Driving_License" name="Driving_License" required>
+                                        <option value="">Select Status</option>
+                                        <option value="0">No</option>
+                                        <option value="1">Yes</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="Region_Code" class="form-label">Region Code *</label>
+                                    <input type="number" class="form-control" id="Region_Code" name="Region_Code"
+                                        step="0.1" required>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="Previously_Insured" class="form-label">Previously Insured *</label>
+                                    <select class="form-select" id="Previously_Insured" name="Previously_Insured"
+                                        required>
+                                        <option value="">Select Status</option>
+                                        <option value="0">No</option>
+                                        <option value="1">Yes</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="Annual_Premium" class="form-label">Annual Premium ($) *</label>
+                                    <input type="number" class="form-control" id="Annual_Premium" name="Annual_Premium"
+                                        step="0.01" required>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="Policy_Sales_Channel" class="form-label">Policy Sales Channel *</label>
+                                    <input type="number" class="form-control" id="Policy_Sales_Channel"
+                                        name="Policy_Sales_Channel" step="0.1" required>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="Vintage" class="form-label">Vintage (days) *</label>
+                                    <input type="number" class="form-control" id="Vintage" name="Vintage" required>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="Vehicle_Age_lt_1_Year" class="form-label">Vehicle Age < 1 Year *</label>
+                                            <select class="form-select" id="Vehicle_Age_lt_1_Year"
+                                                name="Vehicle_Age_lt_1_Year" required>
+                                                <option value="">Select Status</option>
+                                                <option value="0">No</option>
+                                                <option value="1">Yes</option>
+                                            </select>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="Vehicle_Age_gt_2_Years" class="form-label">Vehicle Age > 2 Years
+                                        *</label>
+                                    <select class="form-select" id="Vehicle_Age_gt_2_Years"
+                                        name="Vehicle_Age_gt_2_Years" required>
+                                        <option value="">Select Status</option>
+                                        <option value="0">No</option>
+                                        <option value="1">Yes</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12 mb-3">
+                                    <label for="Vehicle_Damage_Yes" class="form-label">Vehicle Damage (Previously Had
+                                        Damage) *</label>
+                                    <select class="form-select" id="Vehicle_Damage_Yes" name="Vehicle_Damage_Yes"
+                                        required>
+                                        <option value="">Select Status</option>
+                                        <option value="0">No</option>
+                                        <option value="1">Yes</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                                <button type="reset" class="btn btn-secondary btn-lg">Clear</button>
+                                <button type="submit" class="btn btn-primary btn-lg">Predict Insurance Response</button>
+                            </div>
+                        </form>
+
+                        <div class="alert alert-light mt-4" role="alert">
+                            <small class="text-muted">* All fields are required to make a prediction</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Training Section -->
+    <div class="container mt-5 mb-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0">Model Training</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        <p>Retrain the machine learning model with latest data:</p>
+                        <form method="get" action="/train" style="display: inline;">
+                            <button type="submit" class="btn btn-warning btn-lg">
+                                🔄 Start Training Pipeline
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white text-center py-4 mt-5">
+        <p>&copy; 2026 Vehicle Insurance Prediction System | MLOps Project</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
