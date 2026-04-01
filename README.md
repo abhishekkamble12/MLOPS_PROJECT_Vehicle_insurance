@@ -5,6 +5,26 @@ The **Vehicle Insurance MLOps Pipeline** is an end-to-end Machine Learning proje
 
 ---
 
+## ⚙️ How the Project Works (User Flow)
+The application provides a seamless connection between a frontend user interface and a robust ML backend:
+1. **Data Input**: A user visits the hosted web application and fills out a form detailing their demographics (Age, Gender, Region) and vehicle information (Damage history, Vintage, Driving License).
+2. **Form Submission & Processing**: The FastAPI backend captures the submitted data, validates it, and transforms the raw inputs into a model-compatible `pandas` DataFrame using the preprocessing components.
+3. **Model Prediction**: The backend invokes the `VehicleDataClassifier`, which loads the pre-trained classification model. The model calculates the likelihood of the customer purchasing insurance.
+4. **Displaying Results**: The resulting prediction is instantaneously relayed back to the users' screen as either `Response-Yes` (likely to buy insurance) or `Response-No` (unlikely to buy).
+5. **On-Demand Training**: An administrator can trigger the `/train` endpoint. This runs the `TrainPipeline` asynchronously, which retrieves current data, retrains a new model using `scikit-learn`, evaluates it, and ultimately promotes it for use if accuracy thresholds are met.
+
+---
+
+## ☁️ How the Backend Works with AWS
+This project deeply integrates with **Amazon Web Services (AWS)** for robust model storage, containerized application hosting, and seamless continuous deployment workflows:
+
+* **Amazon S3 (Simple Storage Service):** Inside the backend pipeline, `boto3` is utilized to establish a direct connection configuration (`aws_connection.py`, `aws_storage.py`). The MLOps pipeline interfaces with S3 buckets to securely pull raw/processed datasets for training streams, and also to save/load trained Machine Learning artifacts (`model.pkl`) automatically.
+* **Amazon ECR (Elastic Container Registry):** Once the CI/CD pipeline verifies code health, a production-ready Docker image containing the FastAPI server and ML ecosystem is built, tagged, and actively pushed to an ECR Repository as defined in the deployment workflow.
+* **Amazon EC2 (Elastic Compute Cloud):** A self-hosted GitHub Actions runner connects to an actively running EC2 instance. The EC2 instance securely pulls the latest image directly from ECR.
+* **Secure Credential Injection:** During deployment (`aws.yaml`), crucial credentials like `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, and `AWS_DEFAULT_REGION` are dynamically unpacked from GitHub Secrets and securely passed into the Docker container via environmental runtime flags (`-e`). This allows the isolated backend container to securely authenticate internally with S3 and other AWS sub-services without exposing keys in the source code.
+
+---
+
 ## 🏗️ Architecture & Pipeline Flow
 The project is built with a modular architecture encapsulating the complete Machine Learning lifecycle:
 
