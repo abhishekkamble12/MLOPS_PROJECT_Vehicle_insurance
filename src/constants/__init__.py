@@ -3,8 +3,7 @@ from datetime import date
 from dotenv import load_dotenv
 load_dotenv()
 # For MongoDB connection
-monogo_username ="kambleabhishek7744_db_user"
-mongo_password="dYO1RoxwpdZF6RCa"
+
 DATABASE_NAME = "Cluster0"
 COLLECTION_NAME = "insurance"
 MONGODB_URL_KEY = "MONGODB_URL"
